@@ -1,0 +1,11 @@
+cell1.png,0,0;
+play.png,512,0;
+goalCell.png,1024,0;
+greyCell.png,0,512;
+cell5.png,0,1024;
+cell3.png,512,512;
+cell4.png,1024,512;
+cell2.png,512,1024;
+music.png,1024,1024;
+exit.png,1280,1024;
+restart.png,1024,1280;
