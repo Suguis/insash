@@ -3,7 +3,8 @@
 -- TODO: Optimizar el juego agrupando todas las imágenes en una
 -- TODO: Hacer una pantalla de carga usando threads, y con una barra de progreso si puede ser, o un porcentaje en número
 -- TODO: Mejorar los mensajes de la UI, haciendo que éstos permitan colores y opciones de desaparición (hacer click, esperar x segundos...)
--- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O
+-- TODO: Mejorar la IA para que ponga el tiempo aproximado que tardará en computar un nivel
+-- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
 -- Librerías
 Class = require "lib.classic.classic" -- Generador de clases

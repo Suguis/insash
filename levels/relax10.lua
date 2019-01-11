@@ -10,6 +10,6 @@ t.layout[1] = {
 
 t.moves = {5, 6}
 
-t.message = "Orange cells are similar to other color cells..."
+t.message = "Orange cells are similar to other color cells"
 
 return t
