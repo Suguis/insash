@@ -44,7 +44,7 @@ end
 function funcs:draw()
   -- Fondo
   love.graphics.setShader(shaders.multicolorbg)
-    love.graphics.setColor(.5, .5, .5, 1 - (lm:get() - 1) / (lm:getTotalLevels(lm:getMode()) - 1))
+    love.graphics.setColor(1, 1, 1, 1 - (lm:get() - 1) / (lm:getTotalLevels(lm:getMode()) - 1))
     love.graphics.rectangle("fill", 0, 0, WIDTH, HEIGHT)
     love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setShader()

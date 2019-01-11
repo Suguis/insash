@@ -15,5 +15,5 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords)
 
   // Output to screen
   vec4 texturecolor = Texel(texture, texture_coords);
-  return texturecolor * vec4(col, 1.0) * color;
+  return texturecolor * vec4(col, .5) * color;
 }
