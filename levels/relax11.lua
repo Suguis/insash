@@ -1,15 +1,15 @@
 local t = {}
-t.init = {x = 0, y = 3}
+t.init = {x = 1, y = 1}
 t.layout = {}
 
 t.layout[1] = {
-  {0, 1, 2, 6},
-  {1, 2, 3, 2},
-  {1, 5, 2, 1},
-  {6, 1, 1, 0}
+  {2, 3, 2},
+  {1, 2, 1},
+  {1, 5, 1}
 }
 
-t.moves = {3, 4}
--- 5924 movimientos diferentes!
+t.moves = {5, 6}
+
+t.message = "Orange cells are similar to other color cells"
 
 return t

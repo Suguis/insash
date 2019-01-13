@@ -38,7 +38,9 @@ function funcs:draw()
   -- GUI
   self.container:draw()
   love.graphics.setFont(FONT32)
-  love.graphics.printf(self.titleLabel, 0, HEIGHT / 8, WIDTH, "center")
+  love.graphics.setColor(1, 1, 1, .4)
+  love.graphics.printf(self.titleLabel, 0, math.floor(HEIGHT / 8), WIDTH, "center")
+  love.graphics.setColor(1, 1, 1, 1)
 end
 
 function funcs:mousepressed(x, y, button, isTouch)

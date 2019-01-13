@@ -3,7 +3,7 @@ t.init = {x = 1, y = 0}
 t.layout = {}
 
 t.layout[1] = {
-  {1, 5}
+  {1, 5},
 }
 
 t.moves = {2, 2}

@@ -8,11 +8,12 @@ function onGoal(x, y, grid) -- Comprueba si existe una casilla redonda en la pos
   end
 end
 
-local function solve(x, y, maxMoves, detailedInfo, grid, moves) -- Calcula todas las soluciones posibles, el número mínimo y el máximo de movimientos
+local function solve(x, y, maxMoves, detailedInfo, data, grid, moves) -- Calcula todas las soluciones posibles, el número mínimo y el máximo de movimientos
   -- x: posición x del jugador
   -- y: posición y del jugador
-  -- grid: grilla del nivel,
-  -- moves: hoja de datos
+  -- grid: grilla del nivel
+  -- moves: hoja de datos de los movimientos
+  data.iter = data.iter + 1
 
   grid = grid or mytable.copy(lm:getGrid())
 
@@ -41,7 +42,7 @@ local function solve(x, y, maxMoves, detailedInfo, grid, moves) -- Calcula todas
           if moves[i][1] == moves[j][1] and moves[i][2] == moves[j][2] then -- Si se repite un movimiento (fin del dash)
             lastDashMove = i - 1
             dashes = dashes + 1
-            if detailedInfo then print "***" end -- Separación de dash
+            if detailedInfo then io.write "] [" end -- Separación de dash
           end
         end
 
@@ -56,16 +57,17 @@ local function solve(x, y, maxMoves, detailedInfo, grid, moves) -- Calcula todas
           elseif diffY == 1 then arrow = "v"
           end
         else
-          arrow = "*init*"
+          arrow = "["
         end
 
-        if detailedInfo then print(i .. ": " .. "(" .. moves[i][1] .. ", " .. moves[i][2] .. ")", arrow) end
+        if detailedInfo then io.write(arrow) end --print(i .. ": " .. "(" .. moves[i][1] .. ", " .. moves[i][2] .. ")", arrow)
       end
+      data.solutions = data.solutions + 1
       if detailedInfo then
-        print ("Solution found with " .. dashes .. " dashes")
+        print ("]\nSolution found with " .. dashes .. " dashes")
         print "============================================================"
       else
-        io.write(dashes .. ", ")
+        io.write(dashes .. ",")
       end
       break
     end
@@ -81,7 +83,7 @@ local function solve(x, y, maxMoves, detailedInfo, grid, moves) -- Calcula todas
         end
       end
       if #newMoves <= maxMoves then
-        solve(newX, newY, maxMoves, detailedInfo, newGrid, newMoves)
+        solve(newX, newY, maxMoves, detailedInfo, data, newGrid, newMoves)
       end
     end
   end
@@ -91,13 +93,16 @@ function AI.solve()
   local initTime
   local maxMoves
   local detailedInfo
+  local data = {iter = 0, solutions = 0}
   io.write("Type the max number of moves (leave blank for inf): ")
   maxMoves = tonumber(io.read()) or math.huge
   io.write("Do you want detailed info (move steps, dashes, processing time...)? (y/n): ")
   detailedInfo = (function() if io.read() == "y" then return true end end)()
   initTime = os.clock()
-  solve(player.x, player.y, maxMoves, detailedInfo)
-  if detailedInfo then print("Processing time: " .. os.clock() - initTime .. "s") end
+  solve(player.x, player.y, maxMoves, detailedInfo, data)
+  print("Processing time: " .. os.clock() - initTime .. "s")
+  print("Iterations: " .. data.iter)
+  print("Solutions: " .. data.solutions)
 end
 
 return AI

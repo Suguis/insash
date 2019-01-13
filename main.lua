@@ -1,9 +1,11 @@
 -- TODO: Rediseñar la pantalla principal
 -- TODO: Hacer un efecto de desvanecimiento con los ways, y que algunas baldosas tengan animaciones al ser pisadas
--- TODO: Optimizar el juego agrupando todas las imágenes en una
 -- TODO: Hacer una pantalla de carga usando threads, y con una barra de progreso si puede ser, o un porcentaje en número
--- TODO: Mejorar los mensajes de la UI, haciendo que éstos permitan colores y opciones de desaparición (hacer click, esperar x segundos...)
--- TODO: Mejorar la IA para que ponga el tiempo aproximado que tardará en computar un nivel
+-- TODO: Permitir que se pueda, además del zoom, poder desplazarse por la pantalla
+-- TODO: Permitir cancelar dashes en construcción
+-- TODO: Crear un sistema para elegir el idioma
+-- TODO: Reorientar los niveles (NSEO)
+
 -- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
 -- Librerías

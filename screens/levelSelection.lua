@@ -108,7 +108,9 @@ function funcs:draw()
 
   -- GUI
   love.graphics.setFont(FONT32)
-  love.graphics.printf(self.levelLabel, 0, HEIGHT / 32, WIDTH, "center")
+  love.graphics.setColor(1, 1, 1, .4)
+  love.graphics.printf(self.levelLabel, 0, math.floor(HEIGHT / 32), WIDTH, "center")
+  love.graphics.setColor(1, 1, 1, 1)
   self.container:draw()
   self.levelButtons:draw()
   if self.notCompletedLevelMessage then self.notCompletedLevelMessage:draw() end
