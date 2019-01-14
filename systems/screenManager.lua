@@ -1,7 +1,7 @@
 local sm = {}
 sm.currScr = nil
 sm.screens = {
-  ["intro"] = require "screens.intro",
+  ["load"] = require "screens.load",
   ["mainMenu"] = require "screens.mainMenu",
   ["levelSelection"] = require "screens.levelSelection",
   ["level"] = require "screens.level",
