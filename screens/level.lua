@@ -74,8 +74,10 @@ function funcs:update(dt)
   gestures:updateTouches()
   self.camZoomFlux = camera:smoothFluxZoom(self.camScale, 0.05, "linear") -- Se encarga de ampliar constantemente al valor de self.camScale
   if self.moveOrigin then
-    self.camX = self.moveOrigin.x - love.mouse.getX() + self.lastPos.x
-    self.camY = self.moveOrigin.y - love.mouse.getY() + self.lastPos.y
+    local x = love.system.getOS() == "Android" and gestures.touches[1].x or love.mouse.getX()
+    local y = love.system.getOS() == "Android" and gestures.touches[1].y or love.mouse.getY()
+    self.camX = self.moveOrigin.x - x + self.lastPos.x
+    self.camY = self.moveOrigin.y - y + self.lastPos.y
   end
   camera:lockPosition(player.x * TILESIZE + TILESIZE / 2 + self.camX/self.camScale, player.y * TILESIZE + TILESIZE / 2 + self.camY/self.camScale, camera.smooth.damped(SMOOTHSPEED)) -- Para que al hacer pich zoom se mueva directamente a la posición
   if way:isActive() and love.mouse.isDown(1, 2, 3) then
@@ -99,7 +101,7 @@ function funcs:mousepressed(x, y, button, istouch, presses)
     way:enable()
     way:addNode(x, y)
     way:updateMouse(camera:worldCoords(love.mouse.getPosition()))
-  elseif not way:locateNode(x, y) then
+  elseif not way:locateNode(x, y) and love.system.getOS() == "Windows" then
     self.moveOrigin = {x = love.mouse.getX(), y = love.mouse.getY()}
   end
 end
@@ -117,19 +119,26 @@ function funcs:mousereleased(x, y, button, isTouch)
     end
     way:disable()
     way:reset()
-  else
+  elseif love.system.getOS() == "Windows" then
     self.lastPos = {x = self.camX, y = self.camY}
     self.moveOrigin = nil
   end
 end
 
 function funcs:touchpressed(id, x, y)
-
+  gestures:addTouch(id, x, y)
+  self.lastPos = {x = self.camX, y = self.camY}
+  self.moveOrigin = {x = x, y = y}
 end
 
 function funcs:touchreleased(id, x, y)
+  gestures:removeTouch(id)
   self.lastPos = {x = self.camX, y = self.camY}
-  self.moveOrigin = nil
+  if gestures:getActiveTouches() == 1 then
+    self.moveOrigin = {x = gestures.touches[1].x, y = gestures.touches[1].y}
+  else
+    self.moveOrigin = nil
+  end
 end
 
 return Screen(name, funcs)
