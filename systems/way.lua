@@ -54,7 +54,7 @@ function way:locateNode(x, y)
   return false
 end
 
-function way:removeLastNode(x, y)
+function way:removeLastNode()
   for i = 1, 2 do
     self.nodes[#self.nodes] = nil
     self.drawNodes[#self.drawNodes] = nil

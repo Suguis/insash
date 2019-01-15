@@ -18,7 +18,7 @@ function gestures:removeTouch(id) -- Elimina un touch y deja al restante al prin
   for i = 1, #self.touches do
     if self.touches[i].id == id then
       self.touches[i] = {id = nil, x = 0, y = 0}
-      if i == 1 then self.touches[i], self.touches[2] = self.touches[2], self.touches[i] end -- Si solo hey un touch se pone de primero
+      if i == 1 then self.touches[i], self.touches[2] = self.touches[2], self.touches[i] end -- Si solo hay un touch se pone de primero
     end
   end
 end

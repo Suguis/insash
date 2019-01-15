@@ -1,12 +1,9 @@
 -- TODO: Rediseñar la pantalla principal
 -- TODO: Hacer un efecto de desvanecimiento con los ways, y que algunas baldosas tengan animaciones al ser pisadas
 -- TODO: Hacer una pantalla de carga usando threads, y con una barra de progreso si puede ser, o un porcentaje en número
--- TODO: Permitir que se pueda, además del zoom, poder desplazarse por la pantalla
--- TODO: Permitir cancelar dashes en construcción
 -- TODO: Crear un sistema para elegir el idioma
 -- TODO: Reorientar los niveles (NSEO)
 -- TODO: Crear todos los niveles restantes
--- TODO: Cambiar el error-handler para que muestre algo para enviar un error en vez de mostrar pantallazo azul
 
 -- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
@@ -46,13 +43,12 @@ wins = require "systems.winstate"
 shaders = {}
 shaders.multicolorbg = love.graphics.newShader("shaders/multicolor.glsl")
 
--- Constantes globales:
+-- Varaibles/constantes globales:
 -- Ponemos las dimensiones del dispositivo para que todo se posicione correctamente en portrait
 WIDTH = love.graphics.getWidth()
 HEIGHT = love.graphics.getHeight()
 
 TILESIZE = 32 -- Tamaño de la cuadrícula
-SCALE = 1 -- Escala constante de la cámara
 SMOOTHSPEED = 16 -- Velocidad de los efectos suaves de la cámara
 DPI = 1
 TIME = 0
@@ -106,16 +102,6 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, scancode, isrepeat)
-  if key == 'left' then
-    camera:move(-1, 0)
-  elseif key == 'right' then
-    camera:move(1, 0)
-  elseif key == '+' then
-    SCALE = SCALE * 2
-  elseif key == '-' then
-    SCALE = SCALE / 2
-  end
-
   if key == 'd' and love.keyboard.isDown('lctrl') then love.system.openURL("http://127.0.0.1:8000") end -- Se abre lovebird al pulsar 'Ctrl + D'
   if key == 's' and love.keyboard.isDown('lctrl') then ai.solve(player.x, player.y) end -- Se ejecuta la IA para resolver el nivel
 end

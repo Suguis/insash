@@ -213,16 +213,12 @@ end
 
 -- Funciones no creada por el creador de la librería, dependientes de flux
 
-function camera:smoothZoom(newZoom, time, ease)
+function camera:smoothFluxZoom(newZoom, time, ease)
 	time = time or 1
 	ease = ease or "cubicinout"
-	flux.to(self, time, {scale = newZoom}):ease(ease)
+	return flux.to(self, time, {scale = newZoom}):ease(ease)
 end
 
-function camera:smoothFadein(newZoom, time)
-	self:zoom(0)
-	self:smoothZoom(newZoom, time)
-end
 ------------------------
 
 -- the module

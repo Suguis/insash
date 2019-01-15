@@ -1,9 +1,6 @@
 local funcs = {}
 local name = "level"
 
--- Variables locales
-local initDistance = nil
-
 -- Funciones locales
 local function toNode(x, y) -- Convierte una posición en un nodo atendiendo a la posicion y a la escala de la cámara
   x, y = camera:worldCoords(x, y)
@@ -11,6 +8,7 @@ local function toNode(x, y) -- Convierte una posición en un nodo atendiendo a l
 end
 
 function funcs:load()
+  self.camZoomFlux = nil
   self.nodeConnect = love.audio.newSource("res/sound/water_drop_init.mp3", "static")
   self.wayComplete = love.audio.newSource("res/sound/water_drop_final.mp3", "static")
   self.container = UI.Container(
@@ -31,13 +29,19 @@ end
 
 -- Callbacks
 function funcs:init(...)
+  self.camX = 0
+  self.camY = 0
+  self.camScale = 1.5
+  self.moveOrigin = nil
+  self.lastPos = {x = 0, y = 0}
+
   -- Mensaje de introducción
   if lm:getMessage() then
     self.message = UI.Message(lm:getMessage(), WIDTH / 2 - 200 / 2, HEIGHT / 4 - 150 / 2, 200, 150, {1,1,1,1}, "onRelease")
   else self.message = nil end
 
-  -- Establecemos los valores iniciales de la cámara
-  camera:zoom(0)
+  if self.camZoomFlux then self.camZoomFlux:stop() end
+  flux.to(camera, 0, {scale = 0})
   camera:lookAt(player.x * TILESIZE + TILESIZE / 2, player.y * TILESIZE + TILESIZE / 2)
 end
 
@@ -62,23 +66,27 @@ function funcs:draw()
 end
 
 function funcs:update(dt)
+  local x, y = toNode(love.mouse.getX(), love.mouse.getY())
+
   shaders.multicolorbg:send("time", TIME)
 
   player:update(dt)
   gestures:updateTouches()
-  camera:smoothZoom(SCALE, 0.05, "linear") -- Se encarga de ampliar constantemente al valor de SCALE
-  if initDistance then -- Si la variable initDistance existe (existirá cuando haya únicamente dos touches activos, ver touchpresed y touchreleased)
-    SCALE = gestures:getTouchesDistance(1, 2) / initDistance -- Se ajusta la escala según la distancia de los touches
+  self.camZoomFlux = camera:smoothFluxZoom(self.camScale, 0.05, "linear") -- Se encarga de ampliar constantemente al valor de self.camScale
+  if self.moveOrigin then
+    self.camX = self.moveOrigin.x - love.mouse.getX() + self.lastPos.x
+    self.camY = self.moveOrigin.y - love.mouse.getY() + self.lastPos.y
   end
-  camera:lockPosition(player.x * TILESIZE + TILESIZE / 2, player.y * TILESIZE + TILESIZE / 2, camera.smooth.damped(SMOOTHSPEED))
+  camera:lockPosition(player.x * TILESIZE + TILESIZE / 2 + self.camX/self.camScale, player.y * TILESIZE + TILESIZE / 2 + self.camY/self.camScale, camera.smooth.damped(SMOOTHSPEED)) -- Para que al hacer pich zoom se mueva directamente a la posición
   if way:isActive() and love.mouse.isDown(1, 2, 3) then
     way:updateMouse(camera:worldCoords(love.mouse.getPosition())) -- Se actualiza la posición del mouse según la configuración de la cámara
     -- Si el mouse está sobre un nodo aún no añadido entonces se añade
-    local x, y = toNode(love.mouse.getX(), love.mouse.getY())
     if way:nodeAvaliable(x, y) then
       way:addNode(x, y)
       self.nodeConnect:stop()
       self.nodeConnect:play()
+    elseif #way.nodes > 2 and x == way.nodes[#way.nodes-3] and y == way.nodes[#way.nodes-2] then -- Si el mouse está en penúltimo nodo puesto
+      way:removeLastNode() -- Se elimina el último nodo
     end
   end
 end
@@ -91,6 +99,8 @@ function funcs:mousepressed(x, y, button, istouch, presses)
     way:enable()
     way:addNode(x, y)
     way:updateMouse(camera:worldCoords(love.mouse.getPosition()))
+  elseif not way:locateNode(x, y) then
+    self.moveOrigin = {x = love.mouse.getX(), y = love.mouse.getY()}
   end
 end
 
@@ -107,27 +117,19 @@ function funcs:mousereleased(x, y, button, isTouch)
     end
     way:disable()
     way:reset()
+  else
+    self.lastPos = {x = self.camX, y = self.camY}
+    self.moveOrigin = nil
   end
 end
 
 function funcs:touchpressed(id, x, y)
-  gestures:addTouch(id, x, y)
-  if gestures:getActiveTouches() == 2 then initDistance = gestures:getTouchesDistance(1, 2) / SCALE
-    --[[                                                ^
-    Se establece initDistance a la distancia de los touches, pero dividida por SCALE, para que no vuelva al
-    zoom inicial al hacer pinch, ya que en funcs:update, SCALE se establece como el cociente entre la posición
-    actual de los touches y esta variable, y para conservar el zoom modificado antes de volver a hacer pinch,
-    se divide esta variable por el zoom que hay justo cuando empieza a haber dos touches activos.
-    ]]
-  elseif gestures:getActiveTouches() ~= 2 then initDistance = nil
-  end
+
 end
 
 function funcs:touchreleased(id, x, y)
-  gestures:removeTouch(id)
-  if gestures:getActiveTouches() == 2 then initDistance = gestures:getTouchesDistance(1, 2) / SCALE
-  elseif gestures:getActiveTouches() ~= 2 then initDistance = nil
-  end
+  self.lastPos = {x = self.camX, y = self.camY}
+  self.moveOrigin = nil
 end
 
 return Screen(name, funcs)
