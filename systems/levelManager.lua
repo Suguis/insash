@@ -18,6 +18,8 @@ lm.levels = {
     [15] = require "levels.relax15",
     [16] = require "levels.relax16",
     [17] = require "levels.relax17",
+    [18] = require "levels.relax18",
+    [19] = require "levels.relax19",
   }
 }
 
