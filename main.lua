@@ -1,10 +1,7 @@
--- TODO: Rediseñar la pantalla principal
--- TODO: Hacer un efecto de desvanecimiento con los ways, y que algunas baldosas tengan animaciones al ser pisadas
--- TODO: Hacer una pantalla de carga usando threads, y con una barra de progreso si puede ser, o un porcentaje en número
 -- TODO: Crear un sistema para elegir el idioma
 -- TODO: Reorientar los niveles (NSEO)
 -- TODO: Crear todos los niveles restantes
-
+-- TODO: Poner algo para dar créditos
 -- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
 if love.system.getOS() == "Windows" then love.window.setFullscreen(false) end
@@ -48,6 +45,9 @@ shaders.multicolorbg = love.graphics.newShader("shaders/multicolor.glsl")
 WIDTH = love.graphics.getWidth()
 HEIGHT = love.graphics.getHeight()
 
+TITLE = "INSASH"
+VERSION = "1.0.0"
+
 TILESIZE = 32 -- Tamaño de la cuadrícula
 SMOOTHSPEED = 16 -- Velocidad de los efectos suaves de la cámara
 DPI = 1
@@ -69,7 +69,7 @@ DEBUGGING = false -- Si esto está desactivado cuando se produzcan errores no ap
 -- Solo activar este código cuando se necesite hacer un atlas
 --[[
 require "lib.atlas.atlas"
-atlas = Atlas(0, 0, false, "res/sprites", "atlas", true, false)
+atlas = Atlas(0, 0, false, "res/sprites/__singleSprites", "atlas", true, false)
 --]]
 
 sm:load()

@@ -101,7 +101,7 @@ function funcs:mousepressed(x, y, button, istouch, presses)
     way:enable()
     way:addNode(x, y)
     way:updateMouse(camera:worldCoords(love.mouse.getPosition()))
-  elseif not way:locateNode(x, y) and love.system.getOS() == "Windows" then
+  elseif love.system.getOS() == "Windows" and not way:isActive() then
     self.moveOrigin = {x = love.mouse.getX(), y = love.mouse.getY()}
   end
 end
@@ -126,9 +126,12 @@ function funcs:mousereleased(x, y, button, isTouch)
 end
 
 function funcs:touchpressed(id, x, y)
-  gestures:addTouch(id, x, y)
-  self.lastPos = {x = self.camX, y = self.camY}
-  self.moveOrigin = {x = x, y = y}
+  local nx, ny = toNode(x, y)
+    if (not (player.x == nx and player.y == ny) or gestures:getActiveTouches() > 1) and not way:isActive() then
+    gestures:addTouch(id, x, y)
+    self.lastPos = {x = self.camX, y = self.camY}
+    self.moveOrigin = {x = x, y = y}
+  end
 end
 
 function funcs:touchreleased(id, x, y)
