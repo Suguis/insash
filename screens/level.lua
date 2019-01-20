@@ -119,6 +119,9 @@ function funcs:mousereleased(x, y, button, isTouch)
       self.wayComplete:play()
       player:set(way:getLastNode())
       lm:applyNodes(way.nodes)
+      self.camX = 0 -- Se restablece el desplazamiento de la cámara
+      self.camY = 0
+      self.lastPos = {x = 0, y = 0}
     end
     way:disable()
     way:reset()
