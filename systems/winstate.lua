@@ -2,8 +2,8 @@ wins = {}
 wins.enabled = false
 wins.opacity = 0
 wins.rangeColors = {
-  purple = {.25, 0, .7, 1},
-  gold = {1, .85, 0, 1},
+  purple = {.33, 0, 1, 1},
+  gold = {1, .66, 0, 1},
   white = {1, 1, 1, 1}
 }
 local WIDTH = love.graphics.getWidth()

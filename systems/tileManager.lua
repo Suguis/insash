@@ -60,6 +60,7 @@ tm.tiles = {
       return t end)(),
     onOver = function(grid, x, y, z, mode)
       if not lm:remainingCells() then -- Si no quedan celdas que pisar
+        if BGM2:isPlaying() then BGM2:stop(); BGM:play() end
         savm:manageLevelMoves(SAVEDATA, lm:getMoves(), lm:get(), lm:getMode()) -- Se aumenta el número de niveles completados
         savm:save(SAVEDATA) -- Se guardan los datos
         wins:show(lm:getMoves(), lm:getRange(lm:get(), lm:getMode(), lm:getMoves())) -- Se muestra el winstate

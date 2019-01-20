@@ -13,6 +13,7 @@ function funcs:load()
   self.wayComplete = love.audio.newSource("res/sound/water_drop_final.mp3", "static")
   self.container = UI.Container(
     UI.Button(WIDTH - 12 - 24, 12, 24, 24, SPRITES.exit, {onRelease = function()
+      if BGM2:isPlaying() then BGM2:stop(); BGM:play() end
         sm:set("levelSelection", lm:getMode(), lm:getTotalLevels(lm:getMode()), savm:getCompletedLevels(SAVEDATA, lm:getMode()))
         way:disable()
         way:reset()
@@ -29,9 +30,11 @@ end
 
 -- Callbacks
 function funcs:init(...)
+  if lm:get() == lm:getTotalLevels("relax") then BGM:stop(); BGM2:play() end
+
   self.camX = 0
   self.camY = 0
-  self.camScale = 1.5
+  self.camScale = 1.1
   self.moveOrigin = nil
   self.lastPos = {x = 0, y = 0}
 

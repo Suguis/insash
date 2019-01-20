@@ -2,20 +2,25 @@
 local funcs = {}
 local name = "levelSelection"
 
+local function drawBorder(x, y, size)
+  local n,n,w,h = SPRITES.border:getViewport()
+  love.graphics.draw(SPRITES.atlas, SPRITES.border, x + size/2, y + size/2, TIME, size/w, size/h, w/2, h/2)
+end
+
 -- Callbacks
 function funcs:load()
   local levelButtonSize = 48
 
   self.purpleBigCircle = love.graphics.newCanvas(levelButtonSize * DPI, levelButtonSize * DPI)
   self.purpleBigCircle:renderTo(function()
-    love.graphics.setColor(.25, 0, .7)
+    love.graphics.setColor(.33, 0, 1, 1)
     love.graphics.circle("fill", levelButtonSize * DPI / 2, levelButtonSize * DPI / 2, levelButtonSize * DPI / 3, 30 * DPI)
     love.graphics.setColor(1, 1, 1)
   end)
 
   self.goldenBigCircle = love.graphics.newCanvas(levelButtonSize * DPI, levelButtonSize * DPI)
   self.goldenBigCircle:renderTo(function()
-    love.graphics.setColor(1, .85, 0)
+    love.graphics.setColor(1, .66, 0, 1)
     love.graphics.circle("fill", levelButtonSize * DPI / 2, levelButtonSize * DPI / 2, levelButtonSize * DPI / 3, 30 * DPI)
     love.graphics.setColor(1, 1, 1)
   end)
@@ -73,6 +78,7 @@ function funcs:init(...)
           onDraw = function(self)
             self:draw()
             drawLevelAura(self)
+            if i == 20 then drawBorder(self.x, self.y, levelButtonSize) end
           end}, true
         )
       )
@@ -87,7 +93,10 @@ function funcs:init(...)
         canvas = self.bigCircle
       end
       self.levelButtons:append(
-        UI.Button(nil, nil, levelButtonSize, levelButtonSize, canvas, {onRelease = onRelease, onHover = onHover}, true)
+        UI.Button(nil, nil, levelButtonSize, levelButtonSize, canvas, {onRelease = onRelease, onHover = onHover, onDraw = function(self)
+          self:draw()
+          if i == 20 then drawBorder(self.x, self.y, levelButtonSize) end
+        end}, true)
       )
     end
   end

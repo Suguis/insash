@@ -20,10 +20,9 @@ lm.levels = {
     [17] = require "levels.relax17",
     [18] = require "levels.relax18",
     [19] = require "levels.relax19",
+    [20] = require "levels.relax20",
   }
 }
-
--- Generacio
 
 function lm:get()
   return self.currLev

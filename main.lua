@@ -53,7 +53,9 @@ SMOOTHSPEED = 16 -- Velocidad de los efectos suaves de la cámara
 DPI = 1
 TIME = 0
 BGM = love.audio.newSource("res/sound/mellow_puzzler.mp3", "stream")
+BGM2 = love.audio.newSource("res/sound/mellow_puzzler_2.mp3", "stream")
 BGM:setLooping(true)
+BGM2:setLooping(true)
 PRESS = love.audio.newSource("res/sound/balloon_snap.mp3", "static")
 WIN = love.audio.newSource("res/sound/beep.mp3", "static")
 FONT32 = love.graphics.newFont("res/fonts/CaviarDreams_Bold.ttf", 32)
