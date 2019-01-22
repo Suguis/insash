@@ -39,8 +39,8 @@ function funcs:init(...)
   self.lastPos = {x = 0, y = 0}
 
   -- Mensaje de introducción
-  if lm:getMessage() then
-    self.message = UI.Message(lm:getMessage(), WIDTH / 2 - 200 / 2, HEIGHT / 4 - 150 / 2, 200, 150, {1,1,1,1}, "onRelease")
+  if lm:getMessage(savm:getLanguage(SAVEDATA)) then
+    self.message = UI.Message(lm:getMessage(savm:getLanguage(SAVEDATA)), WIDTH / 2 - 200 / 2, HEIGHT / 4 - 150 / 2, 200, 150, {1,1,1,1}, "onRelease")
   else self.message = nil end
 
   if self.camZoomFlux then self.camZoomFlux:stop() end

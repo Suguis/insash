@@ -9,6 +9,9 @@ t.layout[1] = {
 
 t.moves = {1, 1}
 
-t.message = "Drag the player onto the blocks to move it"
+t.message = {
+  en = "Drag the player onto the blocks to move it",
+  es = "Arrastra al jugador por las casillas para moverlo",
+}
 
 return t

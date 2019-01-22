@@ -28,8 +28,8 @@ function lm:get()
   return self.currLev
 end
 
-function lm:getMessage()
-  return self.levels[self.currMode][self.currLev].message
+function lm:getMessage(lang)
+  return self.levels[self.currMode][self.currLev].message[lang]
 end
 
 function lm:getMode()

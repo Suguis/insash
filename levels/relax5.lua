@@ -10,6 +10,9 @@ t.layout[1] = {
 
 t.moves = {2, 3}
 
-t.message = "If you get stuck you can use the restart button on the top-left side of the screen"
+t.message = {
+  en = "If you get stuck you can use the level restart button on the top-left side of the screen",
+  es = "Si te quedas atascado puedes puelsar el botón de reinicio de nivel que se encuentra arriba a la izquierda",
+}
 
 return t

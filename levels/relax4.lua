@@ -9,6 +9,9 @@ t.layout[1] = {
 
 t.moves = {2, 3}
 
-t.message = "You need to destroy all colored blocks to pass to the next area"
+t.message = {
+  en = "You need to destroy all colored blocks to pass to the next level",
+  es = "Tienes que destruir todos los bloques de color para pasar al sigiuente nivel",
+}
 
 return t

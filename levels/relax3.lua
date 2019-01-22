@@ -8,6 +8,9 @@ t.layout[1] = {
 
 t.moves = {2, 2}
 
-t.message = "There are blocks to which you can only move once"
+t.message = {
+  en = "There are blocks to which you can only move once",
+  es = "Hay bloques a los que solo te puedes mover una sola vez",
+}
 
 return t

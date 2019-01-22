@@ -1,6 +1,4 @@
--- TODO: Crear un sistema para elegir el idioma
 -- TODO: Reorientar los niveles (NSEO)
--- TODO: Crear todos los niveles restantes
 -- TODO: Poner algo para dar créditos
 -- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
@@ -64,7 +62,8 @@ MUSICSWITCH = true
 SAVEDATA = savm:load() or {
   relax = {
     levelMoves = {}
-  }
+  },
+  language = nil
 }
 DEBUGGING = false -- Si esto está desactivado cuando se produzcan errores no aparecerá la pantalla azul, sino que te mandará a escribir un correo para reportar el error
 
@@ -318,9 +317,38 @@ local function myerrhand(msg)
   local fullErrorText = p
 
   return function()
-    local button = love.window.showMessageBox("Error", "Sorry, an error has ocurred! Would you like to report it to let me know the error and solve it?", {"Yes", "No"})
+    local errData = {
+      es = {
+        title = "Error",
+        message = "Lo siento, ha ocurrido un error. ¿Te gustaría reportarlo con un email para poder solucionarlo cuanto antes?",
+        affirmation = "Sí",
+        negation = "No",
+        mailBody = "&body=Siento el error. Por favor, escribe lo que ha ocurrido debajo de esta línea, y no cambies otras partes de este email para ayudarme a solucionar el error. ¡Gracias!:%0D%0A*escribe aquí lo que ha pasado*%0D%0A%0D%0A------------------------------------------------%0D%0A",
+      },
+      en = {
+        title = "Error",
+        message = "Sorry, an error has ocurred. Would you like to report it via email to let me know the error and solve it as soon as possible?",
+        affirmation = "Yes",
+        negation = "No",
+        mailBody = "&body=Sorry for the error! Please, explain what happened below this line, and do not change other parts of this email to help me to solve the error. Thanks!:%0D%0A*write here what was happened*%0D%0A%0D%0A------------------------------------------------%0D%0A",
+      },
+    }
+
+    local lang = (function()
+      if pcall(function()
+        for msgType, msg in pairs(errData[savm:getLanguage(SAVEDATA)]) do
+          if type(msg) ~= "string" then error("incorrect message") end
+        end
+      end) then -- No hay errores
+        return savm:getLanguage(SAVEDATA)
+      else -- Hay errores
+        return "en" -- Si hay algún problema con el lenguaje se selecciona el inglés
+      end
+    end)()
+
+    local button = love.window.showMessageBox(errData[lang].title, errData[lang].message, {errData[lang].affirmation, errData[lang].negation})
     if button == 1 then
-      love.system.openURL("mailto:adrisolgo7373@gmail.com?subject=*Insash error* ".. msg .. "&body=Sorry for the error! Please, explain what happened below this line, and do not change other parts of this email to help me to solve the error. Thanks!:%0D%0A*Your explanation...*%0D%0A%0D%0A------------------------------------------------%0D%0A" .. p)
+      love.system.openURL("mailto:bitivyte@gmail.com?subject=*Insash error* ".. msg .. errData[lang].mailBody .. p)
     end
 
     return 1

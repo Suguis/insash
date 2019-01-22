@@ -22,6 +22,14 @@ function savm:setCompletedLeves(saveData, num, mode) -- Solo usar para debuger, 
   end
 end
 
+function savm:getLanguage(saveData)
+  return saveData.language
+end
+
+function savm:setLanguage(saveData, lang)
+  saveData.language = lang
+end
+
 function savm:save(saveData)
   love.filesystem.write("save.sav", serialize(saveData))
 end

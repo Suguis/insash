@@ -10,6 +10,9 @@ t.layout[1] = {
 
 t.moves = {2, 3}
 
-t.message = "There are blocks that need to be passed more than once to be destroyed"
+t.message = {
+  en = "There are blocks that need to be passed more than once to be destroyed",
+  es = "Hay bloques por los que debes pasar más de una vez para que sean destruidos",
+}
 
 return t

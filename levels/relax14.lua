@@ -10,6 +10,9 @@ t.layout[1] = {
 
 t.moves = {4, 5}
 
-t.message =  "Things are getting weird..."
+t.message = {
+  en = "Things are getting weird...",
+  es = "Las cosas se están volviendo extrañas...",
+}
 
 return t
