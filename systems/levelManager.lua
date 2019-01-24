@@ -49,12 +49,22 @@ function lm:getRange(num, mode, moves)
     return "purple"
   elseif moves <= self.levels[mode][num].moves[2] then
     return "gold"
+  elseif num <= savm:getCompletedLevels(SAVEDATA, mode) then
+    return "white"
   end
-  return "white"
+  return "no range"
 end
 
 function lm:getTotalLevels(mode)
   return #self.levels[mode]
+end
+
+function lm:isLastLevel(num, mode)
+  return num == #self.levels[mode]
+end
+
+function lm:isFinalLevelPlayable(mode)
+  return savm:getCompletedLevels(SAVEDATA, mode, "purple") >= 15 and savm:getCompletedLevels(SAVEDATA, mode, "white") == 0
 end
 
 function lm:set(num, mode)
@@ -67,7 +77,6 @@ function lm:set(num, mode)
   self.moves = 0
   self:resetGrid(num, mode)
   player:set(self.levels[mode][num].init.x, self.levels[mode][num].init.y)
-  return true -- Indica que no hubo problemas en cargar el nivel especificado
 end
 
 function lm:draw(num)
@@ -114,7 +123,7 @@ function lm:applyNodes(nodes)
     x = way.nodes[i + 1] + 1; y = way.nodes[i] + 1
     for z = 1, #self.currGrid[x][y] do -- Itera según las capas de la tabla
       if self.currGrid[x][y][z] > 0 then
-        tm.tiles[self.currGrid[x][y][z]].onOver(self.currGrid, x, y, z, mode)
+        tm.tiles[self.currGrid[x][y][z]].onOver(self.currGrid, x, y, z, self.currMode)
         if currLev ~= lm:get() then return end -- Si al ir activando las casillas hay alguna que haga pasar de nivel, se detiene la activación de casillas
       end
     end

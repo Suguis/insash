@@ -64,11 +64,13 @@ tm.tiles = {
         savm:manageLevelMoves(SAVEDATA, lm:getMoves(), lm:get(), lm:getMode()) -- Se aumenta el número de niveles completados
         savm:save(SAVEDATA) -- Se guardan los datos
         wins:show(lm:getMoves(), lm:getRange(lm:get(), lm:getMode(), lm:getMoves())) -- Se muestra el winstate
-        if not lm:set(lm:get() + 1) then -- Si no existe el nivel siguiente se vuelve a la pantalla de inicio
-          sm:set("levelSelection", "relax", lm:getTotalLevels("relax"), savm:getCompletedLevels(SAVEDATA, "relax"))
-          return
+        if lm:get() + 1 > lm:getTotalLevels(mode) or (lm:isLastLevel(lm:get() + 1, mode) and not lm:isFinalLevelPlayable(mode)) then -- Si no existe el nivel siguiente se vuelve a la pantalla de inicio
+          sm:set("levelSelection", "relax", lm:getTotalLevels(mode), savm:getCompletedLevels(SAVEDATA, mode))
+        else
+          print(lm:isLastLevel(lm:get() + 1, mode), not lm:isFinalLevelPlayable(mode))
+          lm:set(lm:get() + 1)
+          sm:get():init()
         end
-        sm:get():init()
       end
     end,
     onDraw = function(x, y)

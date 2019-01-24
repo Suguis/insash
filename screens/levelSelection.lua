@@ -56,7 +56,13 @@ function funcs:init(...)
       local onRelease
       local drawLevelAura
       if i == self.completedLevels + 1 then -- Si es el último nivel disponible
-        onRelease = function() lm:set(i, self.mode); sm:set("level") end
+        if lm:isLastLevel(i, "relax") and not lm:isFinalLevelPlayable("relax") then -- Si es el último nivel y no se cumplen los requisitos para jugarlo se muestra un mensaje
+          onRelease = function()
+            self.notCompletedLevelMessage = UI.Message("You must have at least 15 levels with purple range and remaining with golden range",
+            WIDTH / 2 - 220 / 2, HEIGHT / 4 - 120 / 2, 220, 120, {1,1,1,1}, 1.5)
+          end
+        else onRelease = function() lm:set(i, self.mode); sm:set("level") end
+        end
         drawLevelAura = function(self) -- Se hace que la función de dibujar aura dibuje un aura
           love.graphics.setColor(1, 1, 1, .3)
           love.graphics.circle("fill", self.x + levelButtonSize / 2, self.y + levelButtonSize / 2,
@@ -78,7 +84,7 @@ function funcs:init(...)
           onDraw = function(self)
             self:draw()
             drawLevelAura(self)
-            if i == 20 then drawBorder(self.x, self.y, levelButtonSize) end
+            if lm:isLastLevel(i, "relax") then drawBorder(self.x, self.y, levelButtonSize) end
           end}, true
         )
       )
@@ -95,7 +101,7 @@ function funcs:init(...)
       self.levelButtons:append(
         UI.Button(nil, nil, levelButtonSize, levelButtonSize, canvas, {onRelease = onRelease, onHover = onHover, onDraw = function(self)
           self:draw()
-          if i == 20 then drawBorder(self.x, self.y, levelButtonSize) end
+          if lm:isLastLevel(i, "relax") then drawBorder(self.x, self.y, levelButtonSize) end
         end}, true)
       )
     end

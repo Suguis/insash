@@ -1,7 +1,15 @@
 local savm = {}
 
-function savm:getCompletedLevels(saveData, mode) -- Devuelve el número de niveles completados
-  return #saveData[mode].levelMoves
+function savm:getCompletedLevels(saveData, mode, range) -- Devuelve el número de niveles completados
+  if range then
+    local counter = 0
+    for i = 1, lm:getTotalLevels("relax") do
+      if lm:getRange(i, "relax", savm:getMoves(saveData, i, "relax")) == range then counter = counter + 1 end
+    end
+    return counter
+  else
+    return #saveData[mode].levelMoves
+  end
 end
 
 function savm:manageLevelMoves(saveData, newMoves, level, mode) -- Define el "récord" de movimientos de un nivel (si el núm. de movs. es mayor que el actual, no hace nada, sino lo sobreescribe)
