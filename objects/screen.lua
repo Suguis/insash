@@ -12,6 +12,7 @@ function Screen:new(name, funcList)
   self.mousereleased = funcList.mousereleased or void
   self.touchpressed = funcList.touchpressed or void
   self.touchreleased = funcList.touchreleased or void
+  self.keypressed = funcList.keypressed or void
 end
 
 return Screen

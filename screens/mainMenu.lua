@@ -11,7 +11,8 @@ function funcs:load()
   end
 
   self.container = UI.Container(
-    UI.Button(WIDTH / 2 - 24, (HEIGHT*2/5 - (HEIGHT*1/5)/2) - 24, 48, 48, SPRITES.music,
+    -- Música
+    UI.Button(WIDTH / 2 - 24, (HEIGHT*3/10 - (HEIGHT*1/5)/2) - 24, 48, 48, SPRITES.music,
     {
       onRelease = function()
         MUSICSWITCH = not MUSICSWITCH
@@ -25,8 +26,31 @@ function funcs:load()
         love.graphics.setColor(1, 1, 1, 1)
       end
     }),
+
+    -- Créditos
+    UI.Button(WIDTH / 2 - 24, (HEIGHT*9/10 - (HEIGHT*1/5)/2) - 24, 48, 48, (function()
+      local canvas = love.graphics.newCanvas(64, 64)
+      canvas:renderTo(function()
+        love.graphics.setFont(FONT64)
+        love.graphics.printf("i", 0, -8, 64, "center")
+      end)
+      return canvas
+    end)(),
+    {
+      onRelease = function() sm:set("credits") end,
+      onDraw = function(self)
+        self:draw()
+        local increase = self.w * 3/8
+        drawBorder(self.x - increase, self.y - increase, self.w + increase*2)
+        love.graphics.setColor(1, 1, 1, 1)
+      end
+    }),
+
+    -- Salir
     UI.Button(WIDTH - 12 - 24, 12, 24, 24, SPRITES.exit, {onRelease = function() love.event.quit() end}),
-    UI.Button(WIDTH / 2 - 64, (HEIGHT*3/5 - 64), 128, 128, SPRITES.play, {
+
+    -- Jugar
+    UI.Button(WIDTH / 2 - 64, (HEIGHT*5/10 - 64), 128, 128, SPRITES.play, {
       onRelease = function()
         sm:set("levelSelection", "relax", lm:getTotalLevels("relax"), savm:getCompletedLevels(SAVEDATA, "relax"))
       end,
@@ -66,6 +90,10 @@ end
 
 function funcs:mousereleased(x, y, button, isTouch)
   self.container:onRelease()
+end
+
+function funcs:keypressed(key, scancode, isrepeat)
+  if key == "escape" then love.event.quit() end
 end
 
 return Screen(name, funcs)

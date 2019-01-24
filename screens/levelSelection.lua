@@ -117,9 +117,7 @@ function funcs:draw()
 
   -- GUI
   love.graphics.setFont(FONT32)
-  love.graphics.setColor(1, 1, 1, .4)
   love.graphics.printf(self.levelLabel, 0, math.floor(HEIGHT / 32), WIDTH, "center")
-  love.graphics.setColor(1, 1, 1, 1)
   self.container:draw()
   self.levelButtons:draw()
   if self.notCompletedLevelMessage then self.notCompletedLevelMessage:draw() end
@@ -133,6 +131,10 @@ end
 function funcs:mousereleased(x, y, button, isTouch)
   self.container:onRelease()
   self.levelButtons:onRelease()
+end
+
+function funcs:keypressed(key, scancode, isrepeat)
+  if key == "escape" then sm:set("mainMenu") end
 end
 
 return Screen(name, funcs)

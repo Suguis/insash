@@ -3,6 +3,7 @@ sm.currScr = nil
 sm.screens = {
   ["load"] = require "screens.load",
   ["languageSelection"] = require "screens.languageSelection",
+  ["credits"] = require "screens.credits",
   ["mainMenu"] = require "screens.mainMenu",
   ["levelSelection"] = require "screens.levelSelection",
   ["level"] = require "screens.level",

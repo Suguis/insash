@@ -52,4 +52,8 @@ function funcs:mousereleased(x, y, button, isTouch)
   self.container:onRelease()
 end
 
+function funcs:keypressed(key, scancode, isrepeat)
+  if key == "escape" then love.event.quit() end
+end
+
 return Screen(name, funcs)

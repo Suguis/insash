@@ -44,7 +44,7 @@ WIDTH = love.graphics.getWidth()
 HEIGHT = love.graphics.getHeight()
 
 TITLE = "INSASH"
-VERSION = "1.0.0"
+VERSION = "alpha 1.0.0"
 
 TILESIZE = 32 -- Tamaño de la cuadrícula
 SMOOTHSPEED = 16 -- Velocidad de los efectos suaves de la cámara
@@ -56,6 +56,7 @@ BGM:setLooping(true)
 BGM2:setLooping(true)
 PRESS = love.audio.newSource("res/sound/balloon_snap.mp3", "static")
 WIN = love.audio.newSource("res/sound/beep.mp3", "static")
+FONT64 = love.graphics.newFont("res/fonts/CaviarDreams_Bold.ttf", 64)
 FONT32 = love.graphics.newFont("res/fonts/CaviarDreams_Bold.ttf", 32)
 FONT16 = love.graphics.newFont("res/fonts/CaviarDreams_Bold.ttf", 16)
 MUSICSWITCH = true
@@ -105,6 +106,7 @@ end
 function love.keypressed(key, scancode, isrepeat)
   if key == 'd' and love.keyboard.isDown('lctrl') then love.system.openURL("http://127.0.0.1:8000") end -- Se abre lovebird al pulsar 'Ctrl + D'
   if key == 's' and love.keyboard.isDown('lctrl') then ai.solve(player.x, player.y) end -- Se ejecuta la IA para resolver el nivel
+  sm:get():keypressed(key, scancode, isrepeat)
 end
 
 function love.touchpressed(id, x, y, dx, dy, pressure)

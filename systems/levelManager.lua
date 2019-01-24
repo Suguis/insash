@@ -29,7 +29,8 @@ function lm:get()
 end
 
 function lm:getMessage(lang)
-  return self.levels[self.currMode][self.currLev].message[lang]
+  return self.levels[self.currMode][self.currLev].message and
+         self.levels[self.currMode][self.currLev].message[lang] -- Si el nivel no tiene mensajes devuelve nil
 end
 
 function lm:getMode()

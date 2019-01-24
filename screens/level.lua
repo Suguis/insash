@@ -150,4 +150,13 @@ function funcs:touchreleased(id, x, y)
   end
 end
 
+function funcs:keypressed(key, scancode, isrepeat)
+  if key == "escape" then
+    if BGM2:isPlaying() then BGM2:stop(); BGM:play() end
+    sm:set("levelSelection", lm:getMode(), lm:getTotalLevels(lm:getMode()), savm:getCompletedLevels(SAVEDATA, lm:getMode()))
+    way:disable()
+    way:reset()
+  end
+end
+
 return Screen(name, funcs)
