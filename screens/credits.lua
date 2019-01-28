@@ -48,7 +48,7 @@ function funcs:draw()
   -- GUI
   self.exit:draw()
   love.graphics.setFont(FONT16)
-  love.graphics.printf(self.credits[savm:getLanguage(SAVEDATA)], 12, 32, WIDTH - 12, "center")
+  love.graphics.printf(self.credits[savm:getLanguage(SAVEDATA)], 12, 32, WIDTH - 12 - 12, "center")
 end
 
 function funcs:mousepressed(x, y, button, isTouch)

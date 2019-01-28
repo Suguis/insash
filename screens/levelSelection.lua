@@ -58,7 +58,7 @@ function funcs:init(...)
       if i == self.completedLevels + 1 then -- Si es el último nivel disponible
         if lm:isLastLevel(i, "relax") and not lm:isFinalLevelPlayable("relax") then -- Si es el último nivel y no se cumplen los requisitos para jugarlo se muestra un mensaje
           onRelease = function()
-            self.notCompletedLevelMessage = UI.Message("You must have at least 15 levels with purple range and remaining with golden range",
+            self.notCompletedLevelMessage = UI.Message(SYSTEM_MESSAGES[savm:getLanguage(SAVEDATA)].notPlayableFinalLevel,
             WIDTH / 2 - 220 / 2, HEIGHT / 4 - 120 / 2, 220, 120, {1,1,1,1}, 1.5)
           end
         else onRelease = function() lm:set(i, self.mode); sm:set("level") end
@@ -72,7 +72,7 @@ function funcs:init(...)
       else
         -- Se crea el mensaje de nivel no desbloqueado
         onRelease = function()
-          self.notCompletedLevelMessage = UI.Message("Level not unlocked!", WIDTH / 2 - 140 / 2, HEIGHT / 4 - 60 / 2, 140, 60, {1,1,1,1}, 1.5)
+          self.notCompletedLevelMessage = UI.Message(SYSTEM_MESSAGES[savm:getLanguage(SAVEDATA)].notUnlockedLevel, WIDTH / 2 - 140 / 2, HEIGHT / 4 - 60 / 2, 140, 60, {1,1,1,1}, 1.5)
         end
         drawLevelAura = function() end
       end

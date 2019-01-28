@@ -67,7 +67,17 @@ SAVEDATA = savm:load() or {
   language = nil
 }
 DEBUGGING = false -- Si esto está desactivado cuando se produzcan errores no aparecerá la pantalla azul, sino que te mandará a escribir un correo para reportar el error
+SYSTEM_MESSAGES = {
+  es = {
+    notUnlockedLevel = "¡Nivel no desbloqueado!",
+    notPlayableFinalLevel = "Debes de tener al menos 15 niveles con rango morado y el resto con rango dorado",
+  },
 
+  en = {
+    notUnlockedLevel = "Level not unlocked!",
+    notPlayableFinalLevel = "You must have at least 15 levels with purple range and remaining with golden range",
+  }
+}
 -- Solo activar este código cuando se necesite hacer un atlas
 --[[
 require "lib.atlas.atlas"
