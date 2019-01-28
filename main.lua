@@ -2,7 +2,7 @@
 -- TODO: Poner algo para dar créditos
 -- Nota para la cración de niveles: en cada nivel la celda final sigue un patrón de posición N-S-E-O (¡respecto al jugador!)
 
-if love.system.getOS() == "Windows" then love.window.setFullscreen(false) end
+if love.system.getOS() ~= "Android" then love.window.setFullscreen(false) end
 
 -- Librerías
 local utf8 = require("utf8") -- Para el error handler

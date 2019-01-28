@@ -60,7 +60,7 @@ local function solve(x, y, maxMoves, detailedInfo, data, grid, moves) -- Calcula
           arrow = "["
         end
 
-        if detailedInfo then io.write(arrow) end --print(i .. ": " .. "(" .. moves[i][1] .. ", " .. moves[i][2] .. ")", arrow)
+        if detailedInfo then io.write(arrow) end
       end
       data.solutions = data.solutions + 1
       if detailedInfo then

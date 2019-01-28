@@ -20,7 +20,7 @@ function funcs:load()
       end
     }),
 
-    UI.Button(12, 12, 24, 24, SPRITES.restart, {onRelease = function()
+    UI.Button(WIDTH - 12 - 24, HEIGHT - 12 - 24, 24, 24, SPRITES.restart, {onRelease = function()
         camera:zoom(0)
         lm:set(lm:get())
       end
@@ -104,7 +104,7 @@ function funcs:mousepressed(x, y, button, istouch, presses)
     way:enable()
     way:addNode(x, y)
     way:updateMouse(camera:worldCoords(love.mouse.getPosition()))
-  elseif love.system.getOS() == "Windows" and not way:isActive() then
+  elseif love.system.getOS() ~= "Android" and not way:isActive() then
     self.moveOrigin = {x = love.mouse.getX(), y = love.mouse.getY()}
   end
 end
@@ -125,7 +125,7 @@ function funcs:mousereleased(x, y, button, isTouch)
     end
     way:disable()
     way:reset()
-  elseif love.system.getOS() == "Windows" then
+  elseif love.system.getOS() ~= "Android" then
     self.lastPos = {x = self.camX, y = self.camY}
     self.moveOrigin = nil
   end

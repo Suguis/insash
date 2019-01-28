@@ -67,7 +67,6 @@ tm.tiles = {
         if lm:get() + 1 > lm:getTotalLevels(mode) or (lm:isLastLevel(lm:get() + 1, mode) and not lm:isFinalLevelPlayable(mode)) then -- Si no existe el nivel siguiente se vuelve a la pantalla de inicio
           sm:set("levelSelection", "relax", lm:getTotalLevels(mode), savm:getCompletedLevels(SAVEDATA, mode))
         else
-          print(lm:isLastLevel(lm:get() + 1, mode), not lm:isFinalLevelPlayable(mode))
           lm:set(lm:get() + 1)
           sm:get():init()
         end
